@@ -3,9 +3,21 @@ from django.http import JsonResponse
 import json
 import datetime
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.forms import UserCreationForm
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 from .models import *
 from .utils import cookieCart, cartData, guestOrder
+
+def register(request):
+    form=UserCreationForm
+    if request.method=='POST':
+        regForm=UserCreationForm(request.POST)
+        if regForm.is_valid():
+            regForm.save()
+    return render(request, 'registration/register.html', {'form':form})
 
 
 def store(request):
@@ -14,9 +26,10 @@ def store(request):
     cartItems = data['cartItems']
     order = data['order']
     items = data['items']
+    user = request.user
 
     products = Product.objects.all()
-    context = {'products': products, 'cartItems': cartItems}
+    context = {'products': products, 'cartItems': cartItems, 'user': user}
     return render(request, 'store/store.html', context)
 
 
@@ -71,12 +84,25 @@ def updateItem(request):
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
-
+    
     if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        customer, order = guestOrder(request, data)
     else:
         customer, order = guestOrder(request, data)
+    
+    message = Mail(
+        from_email='abhishekmalik2903@gmail.com',
+        to_emails=customer.email,
+        subject='Sending with Twilio SendGrid is Fun',
+        html_content='<strong>and easy to do anywhere, even with Python</strong>')
+    try:
+        sg = SendGridAPIClient('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')
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e)
 
     total = float(data['form']['total'])
     order.transaction_id = transaction_id

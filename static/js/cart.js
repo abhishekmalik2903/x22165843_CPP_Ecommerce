@@ -6,12 +6,12 @@ for (i = 0; i < updateBtns.length; i++) {
 		var action = this.dataset.action
 		console.log('productId:', productId, 'Action:', action)
 		console.log('USER:', user)
-
-		if (user == 'AnonymousUser'){
-			addCookieItem(productId, action)
-		}else{
-			updateUserOrder(productId, action)
-		}
+		addCookieItem(productId, action)
+		//if (user == 'AnonymousUser'){
+		//	addCookieItem(productId, action)
+		//}else{
+		//	updateUserOrder(productId, action)
+		//}
 	})
 }
 
