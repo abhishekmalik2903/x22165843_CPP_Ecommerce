@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+      python: 3.7
+  pre_build:
+    commands:
+      - apt-get update
+      - apt-get install -y jq
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
+  build:
+    commands:
+      - sonar-scanner -Dsonar.login=40146cfc0001ed11e8660a86441c5665725a3a4a -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=CPP_Project -Dsonar.organization=abhishekmalik2903
+      - sleep 5
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=CPP_Project >result.json
+      - cat result.json
+      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
