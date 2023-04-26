@@ -167,12 +167,14 @@
 	    	console.log('User Info:', userFormData)
 
 	    	var url = "/process_order/"
+	    	var csrftoken = getCookie('csrftoken');
 	    	fetch(url, {
 	    		method:'POST',
 	    		headers:{
 	    			'Content-Type':'applicaiton/json',
 	    			'X-CSRFToken':csrftoken,
 	    		},
+	    		credentials: 'include',
 	    		body:JSON.stringify({'form':userFormData, 'shipping':shippingInfo}),
 
 	    	})
