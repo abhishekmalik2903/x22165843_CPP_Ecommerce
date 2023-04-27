@@ -91,6 +91,8 @@ def logics_processOrder(request):
     order.transaction_id = transaction_id
     
     sendMail(customer, items, transaction_id, total)
+    
+    print(customer.email)
 
     if total == order.get_cart_total:
         order.complete = True

@@ -73,6 +73,8 @@ def guestOrder(request, data):
         customer=customer,
         complete=False,
     )
+    
+    print(customer.email)
 
     for item in items:
         product = Product.objects.get(id=item['id'])
