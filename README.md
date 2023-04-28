@@ -54,4 +54,4 @@ AbhishekMalik
 Abhi@2903
 
 ## Deployed
-👉 Live Demo: [e-Commerce]([https://ruhulaminparvez.pythonanywhere.com/](http://x22165843abhishekcppapp-env.eba-wi7mjxu3.us-east-2.elasticbeanstalk.com/))
+👉 Live Demo: (http://x22165843abhishekcppapp-env.eba-wi7mjxu3.us-east-2.elasticbeanstalk.com/)
