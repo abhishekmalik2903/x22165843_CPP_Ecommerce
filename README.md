@@ -35,5 +35,23 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
+Requirements.txt:
+asgiref==3.4.1
+certifi==2021.5.30
+charset-normalizer==2.0.4
+Django==3.2.11
+idna==3.2
+Pillow==9.0.0
+pytz==2021.1
+sqlparse==0.4.2
+urllib3==1.26.6
+python-http-client==3.3.7
+sendgrid==6.10.0
+starkbank-ecdsa==2.2.0
+
+Admin Login:
+AbhishekMalik
+Abhi@2903
+
 ## Deployed
 👉 Live Demo: [e-Commerce]([https://ruhulaminparvez.pythonanywhere.com/](http://x22165843abhishekcppapp-env.eba-wi7mjxu3.us-east-2.elasticbeanstalk.com/))
